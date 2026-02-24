@@ -35,8 +35,12 @@ app.post('/api/refresh', async (_req, res) => {
 // ── Startup: background refresh ────────────────────────────────────────────
 app.listen(PORT, '0.0.0.0', async () => {
   console.log(`\n  ╔══════════════════════════════════════════════════╗`);
-  console.log(`  ║  RoR2 Build Reference running on port ${String(PORT).padEnd(5)}      ║`);
-  console.log(`  ║  Open:  http://localhost:${String(PORT).padEnd(5)}                 ║`);
+  console.log(
+    `  ║  RoR2 Build Reference running on port ${String(PORT).padEnd(5)}      ║`,
+  );
+  console.log(
+    `  ║  Open:  http://localhost:${String(PORT).padEnd(5)}                 ║`,
+  );
   console.log(`  ╚══════════════════════════════════════════════════╝\n`);
 
   // Auto-fetch latest patches + icons on startup

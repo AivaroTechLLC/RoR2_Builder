@@ -112,7 +112,9 @@ async function cacheIcons(force = false) {
         const url = WIKI_ICON_BASE + encodeURIComponent(item.file);
         const res = await fetch(url, { redirect: 'follow', timeout: 10000 });
         if (res.status === 429) {
-          console.warn(`[icons] Rate limited on ${item.name}, waiting ${attempts * 2}s…`);
+          console.warn(
+            `[icons] Rate limited on ${item.name}, waiting ${attempts * 2}s…`,
+          );
           await delay(attempts * 2000);
           continue;
         }
