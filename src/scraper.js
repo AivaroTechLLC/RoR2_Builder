@@ -86,58 +86,20 @@ async function fetchPatchNotes() {
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function cacheIcons(force = false) {
+  // Icons are now fetched on-demand via the /api/icon/:key proxy.
+  // This function only runs a quick count for status reporting.
   ensureDir(ICON_DIR);
   const keys = Object.keys(items);
-  let cached = 0,
-    skipped = 0,
-    failed = 0;
+  let cached = 0, missing = 0;
 
   for (const key of keys) {
-    const item = items[key];
-    const localName = key + '.png';
-    const localPath = path.join(ICON_DIR, localName);
-
-    if (!force && fs.existsSync(localPath)) {
-      skipped++;
-      continue;
-    }
-
-    // Throttle requests to avoid wiki rate limits (429)
-    if (cached > 0 || failed > 0) await delay(350);
-
-    let attempts = 0;
-    while (attempts < 3) {
-      attempts++;
-      try {
-        const url = WIKI_ICON_BASE + encodeURIComponent(item.file);
-        const res = await fetch(url, { redirect: 'follow', timeout: 10000 });
-        if (res.status === 429) {
-          console.warn(
-            `[icons] Rate limited on ${item.name}, waiting ${attempts * 2}s…`,
-          );
-          await delay(attempts * 2000);
-          continue;
-        }
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const buf = await res.buffer();
-        fs.writeFileSync(localPath, buf);
-        cached++;
-        break;
-      } catch (err) {
-        if (attempts >= 3) {
-          console.warn(`[icons] Failed: ${item.name} — ${err.message}`);
-          failed++;
-        } else {
-          await delay(attempts * 1000);
-        }
-      }
-    }
+    const localPath = path.join(ICON_DIR, key + '.png');
+    if (fs.existsSync(localPath)) cached++;
+    else missing++;
   }
 
-  console.log(
-    `[icons] Done — cached: ${cached}, skipped: ${skipped}, failed: ${failed}`,
-  );
-  return { cached, skipped, failed };
+  console.log(`[icons] ${cached} cached locally, ${missing} will load on-demand via proxy`);
+  return { cached, skipped: cached, failed: 0 };
 }
 
 // ── Combined refresh ───────────────────────────────────────────────────────

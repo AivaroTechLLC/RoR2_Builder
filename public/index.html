@@ -509,16 +509,13 @@
       function tileHtml(key) {
         const item = ITEMS[key];
         if (!item) return '';
-        // Try local cached icon first, wiki fallback
-        const localSrc = `/icons/${key}.png`;
-        const wikiSrc = `https://riskofrain2.wiki.gg/wiki/Special:FilePath/${encodeURIComponent(item.file)}`;
-        // Escape apostrophes so onerror JS string doesn't break
-        const safeWikiSrc = wikiSrc.replace(/'/g, '%27');
+        // Use server-side proxy which fetches from wiki with proper headers & caches locally
+        const proxySrc = `/api/icon/${key}`;
         return `
     <div class="tile ${item.tier}" title="${item.name} — ${item.tag}">
       <div class="icon-box">
-        <img loading="lazy" src="${localSrc}"
-             onerror="this.onerror=null;this.src='${safeWikiSrc}';this.addEventListener('error',()=>{this.style.display='none';this.nextElementSibling.style.display='grid'})"
+        <img loading="lazy" src="${proxySrc}"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
              alt="${item.name}"/>
         <span class="fallback">${item.name.substring(0, 2).toUpperCase()}</span>
       </div>
