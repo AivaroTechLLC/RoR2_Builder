@@ -28,6 +28,81 @@ const fetch = require('node-fetch');
 const ICON_DIR = path.join(__dirname, 'public', 'icons');
 const WIKI_BASE = 'https://riskofrain2.wiki.gg/wiki/Special:FilePath/';
 
+// ── Serialized wiki fetch queue (avoids 429 rate limits) ───────────────────
+const _iconQueue = []; // { key, item, resolve, reject }
+let _queueRunning = false;
+const DELAY_MS = 500; // pause between wiki requests
+const MAX_RETRIES = 4;
+
+async function _processQueue() {
+  if (_queueRunning) return;
+  _queueRunning = true;
+
+  while (_iconQueue.length > 0) {
+    const { key, item, resolve, reject } = _iconQueue.shift();
+    const localPath = path.join(ICON_DIR, key + '.png');
+
+    // Another queued request may have cached it while we waited
+    if (fs.existsSync(localPath)) {
+      resolve(localPath);
+      continue;
+    }
+
+    let lastErr;
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        if (attempt > 1)
+          await new Promise((r) => setTimeout(r, attempt * 1500));
+        const url = WIKI_BASE + encodeURIComponent(item.file);
+        const wikiRes = await fetch(url, {
+          redirect: 'follow',
+          timeout: 15000,
+          headers: {
+            'User-Agent': 'RoR2BuildReference/1.0 (local app; icon cache)',
+            Accept: 'image/png,image/*,*/*',
+          },
+        });
+        if (wikiRes.status === 429) {
+          console.warn(
+            `[icon-proxy] 429 on ${key}, retry ${attempt}/${MAX_RETRIES}…`,
+          );
+          lastErr = new Error('429 rate limited');
+          continue;
+        }
+        if (!wikiRes.ok) throw new Error(`Wiki returned ${wikiRes.status}`);
+        const buf = await wikiRes.buffer();
+        if (!fs.existsSync(ICON_DIR))
+          fs.mkdirSync(ICON_DIR, { recursive: true });
+        fs.writeFileSync(localPath, buf);
+        console.log(`[icon-proxy] Cached ${key} (${buf.length} bytes)`);
+        resolve(localPath);
+        lastErr = null;
+        break;
+      } catch (err) {
+        lastErr = err;
+      }
+    }
+    if (lastErr) {
+      console.warn(
+        `[icon-proxy] Failed ${key} after ${MAX_RETRIES} attempts: ${lastErr.message}`,
+      );
+      reject(lastErr);
+    }
+
+    // Delay before next wiki request
+    await new Promise((r) => setTimeout(r, DELAY_MS));
+  }
+
+  _queueRunning = false;
+}
+
+function enqueueIconFetch(key, item) {
+  return new Promise((resolve, reject) => {
+    _iconQueue.push({ key, item, resolve, reject });
+    _processQueue();
+  });
+}
+
 app.get('/api/icon/:key', async (req, res) => {
   const key = req.params.key.replace(/[^a-zA-Z0-9_-]/g, '');
   const item = items[key];
@@ -41,26 +116,12 @@ app.get('/api/icon/:key', async (req, res) => {
     return res.sendFile(localPath);
   }
 
-  // Fetch from wiki with proper headers, cache, and serve
+  // Queue the wiki fetch (serialized to avoid 429)
   try {
-    const url = WIKI_BASE + encodeURIComponent(item.file);
-    const wikiRes = await fetch(url, {
-      redirect: 'follow',
-      timeout: 10000,
-      headers: {
-        'User-Agent': 'RoR2BuildReference/1.0 (local app; icon cache)',
-        Accept: 'image/png,image/*,*/*',
-      },
-    });
-    if (!wikiRes.ok) throw new Error(`Wiki returned ${wikiRes.status}`);
-    const buf = await wikiRes.buffer();
-    if (!fs.existsSync(ICON_DIR)) fs.mkdirSync(ICON_DIR, { recursive: true });
-    fs.writeFileSync(localPath, buf);
-    res.set('Content-Type', 'image/png');
+    const cached = await enqueueIconFetch(key, item);
     res.set('Cache-Control', 'public, max-age=604800');
-    res.send(buf);
+    res.sendFile(cached);
   } catch (err) {
-    console.warn(`[icon-proxy] Failed for ${key}: ${err.message}`);
     res.status(502).send('Icon fetch failed');
   }
 });

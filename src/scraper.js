@@ -90,7 +90,8 @@ async function cacheIcons(force = false) {
   // This function only runs a quick count for status reporting.
   ensureDir(ICON_DIR);
   const keys = Object.keys(items);
-  let cached = 0, missing = 0;
+  let cached = 0,
+    missing = 0;
 
   for (const key of keys) {
     const localPath = path.join(ICON_DIR, key + '.png');
@@ -98,7 +99,9 @@ async function cacheIcons(force = false) {
     else missing++;
   }
 
-  console.log(`[icons] ${cached} cached locally, ${missing} will load on-demand via proxy`);
+  console.log(
+    `[icons] ${cached} cached locally, ${missing} will load on-demand via proxy`,
+  );
   return { cached, skipped: cached, failed: 0 };
 }
 
