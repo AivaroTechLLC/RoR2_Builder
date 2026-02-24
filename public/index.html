@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RoR2 Meta Build Reference</title>
+    <style>
+      :root {
+        --bg: #0b0e14;
+        --card: #141822;
+        --card-2: #1a2030;
+        --text: #e4e9f3;
+        --muted: #8d99b4;
+        --border: #263045;
+        --green: #5edb82;
+        --red: #ff6172;
+        --yellow: #ffc94a;
+        --violet: #b880ff;
+        --blue: #68bcff;
+        --accent: #3a8bfd;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Segoe UI', Inter, system-ui, sans-serif;
+      }
+
+      /* ── top bar ──────────────────────────────────────── */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: linear-gradient(180deg, #111520 80%, transparent);
+        padding: 10px 16px 14px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+      .topbar h1 {
+        font-size: 1.15rem;
+        flex: 1;
+        min-width: 240px;
+      }
+      .topbar .meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      #patchStatus {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #555;
+      }
+      #patchStatus.ok {
+        background: var(--green);
+      }
+      #patchStatus.loading {
+        background: var(--yellow);
+        animation: pulse 0.8s infinite alternate;
+      }
+      #patchStatus.error {
+        background: var(--red);
+      }
+      @keyframes pulse {
+        to {
+          opacity: 0.4;
+        }
+      }
+
+      .btn {
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 14px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn:hover {
+        filter: brightness(1.15);
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+
+      /* ── filter bar ───────────────────────────────────── */
+      .filters {
+        padding: 0 16px 6px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .filters button {
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        border-radius: 999px;
+        padding: 4px 12px;
+        font-size: 0.78rem;
+        cursor: pointer;
+      }
+      .filters button.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+
+      /* ── legend ────────────────────────────────────────── */
+      .legend {
+        padding: 0 16px 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+      .legend span {
+        background: var(--card-2);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 2px 10px;
+      }
+
+      /* ── grid ──────────────────────────────────────────── */
+      .container {
+        max-width: 1760px;
+        margin: 0 auto;
+        padding: 0 10px 20px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 10px;
+      }
+
+      /* ── survivor card ────────────────────────────────── */
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .card-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .card-head h2 {
+        font-size: 1.05rem;
+      }
+      .role-badge {
+        color: var(--muted);
+        font-size: 0.73rem;
+        font-weight: 600;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 2px 9px;
+      }
+      .hint {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .section-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #97a5c4;
+        margin-top: 2px;
+      }
+      .items {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+      }
+
+      /* ── item tile ─────────────────────────────────────── */
+      .tile {
+        background: #0c1120;
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.12s;
+      }
+      .tile:hover {
+        transform: scale(1.06);
+        z-index: 2;
+      }
+      .tile.common {
+        border-color: #596580;
+      }
+      .tile.uncommon {
+        border-color: var(--green);
+      }
+      .tile.legendary {
+        border-color: var(--red);
+      }
+      .tile.boss {
+        border-color: var(--yellow);
+      }
+      .tile.lunar {
+        border-color: var(--blue);
+      }
+      .tile.void {
+        border-color: var(--violet);
+      }
+
+      .tile .icon-box {
+        height: 52px;
+        display: grid;
+        place-items: center;
+        background: #080d18;
+        border-bottom: 1px solid #1e2a42;
+      }
+      .tile .icon-box img {
+        max-width: 44px;
+        max-height: 44px;
+        object-fit: contain;
+      }
+      .tile .icon-box .fallback {
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: #6a7da0;
+        display: none;
+      }
+      .tile .label {
+        padding: 3px 4px 4px;
+        font-size: 0.63rem;
+        line-height: 1.18;
+        font-weight: 600;
+        min-height: 2.1em;
+      }
+      .tile .tag {
+        padding: 0 4px 4px;
+        font-size: 0.58rem;
+        color: var(--muted);
+      }
+
+      /* ── patch panel (expandable) ─────────────────────── */
+      .patch-panel {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        margin: 0 16px 10px;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.35s ease;
+      }
+      .patch-panel.open {
+        max-height: 2000px;
+      }
+      .patch-panel-inner {
+        padding: 14px 16px;
+      }
+      .patch-panel h3 {
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+      }
+      .patch-item {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+      }
+      .patch-item:last-child {
+        border: none;
+        margin: 0;
+        padding: 0;
+      }
+      .patch-title {
+        font-weight: 700;
+        font-size: 0.88rem;
+      }
+      .patch-title a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .patch-title a:hover {
+        text-decoration: underline;
+      }
+      .patch-date {
+        font-size: 0.75rem;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .patch-summary {
+        font-size: 0.78rem;
+        color: var(--muted);
+        margin-top: 4px;
+        white-space: pre-line;
+      }
+
+      /* ── responsive ───────────────────────────────────── */
+      @media (max-width: 700px) {
+        .items {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ─── Top bar ────────────────────────────────────────────── -->
+    <div class="topbar">
+      <h1>RoR2 Meta Build Reference</h1>
+      <div class="meta">
+        <span id="patchStatus"></span>
+        <span id="patchLabel">Loading…</span>
+      </div>
+      <button class="btn" id="btnRefresh" onclick="doRefresh()">
+        &#x21bb; Check for Updates
+      </button>
+      <button
+        class="btn"
+        id="btnPatches"
+        onclick="togglePatches()"
+        style="background: #28304a"
+      >
+        &#x25bc; Patch Notes
+      </button>
+    </div>
+
+    <!-- ─── Patch notes panel ──────────────────────────────────── -->
+    <div class="patch-panel" id="patchPanel">
+      <div class="patch-panel-inner" id="patchContent">
+        <h3>Latest Patch Notes</h3>
+        <p style="color: var(--muted); font-size: 0.85rem">Fetching…</p>
+      </div>
+    </div>
+
+    <!-- ─── Filters ────────────────────────────────────────────── -->
+    <div class="filters" id="filterBar"></div>
+
+    <!-- ─── Legend ──────────────────────────────────────────────── -->
+    <div class="legend">
+      <span style="border-color: #596580">Common</span>
+      <span style="border-color: var(--green)">Uncommon</span>
+      <span style="border-color: var(--red)">Legendary</span>
+      <span style="border-color: var(--yellow)">Boss</span>
+      <span style="border-color: var(--blue)">Lunar</span>
+      <span style="border-color: var(--violet)">Void</span>
+    </div>
+
+    <!-- ─── Build grid ─────────────────────────────────────────── -->
+    <div class="container">
+      <div class="grid" id="grid"></div>
+    </div>
+
+    <script>
+      // ── State ──────────────────────────────────────────────────────────────────
+      let ITEMS = {},
+        SURVIVORS = [],
+        activeFilter = 'all';
+
+      // ── Boot ───────────────────────────────────────────────────────────────────
+      (async () => {
+        await loadBuilds();
+        await loadPatches();
+      })();
+
+      // ── Data loading ───────────────────────────────────────────────────────────
+      async function loadBuilds() {
+        try {
+          const r = await fetch('/api/builds');
+          const d = await r.json();
+          ITEMS = d.items;
+          SURVIVORS = d.survivors;
+          renderFilters();
+          renderGrid();
+        } catch (e) {
+          document.getElementById('grid').innerHTML =
+            `<p style="color:var(--red)">Failed to load builds: ${e.message}</p>`;
+        }
+      }
+
+      async function loadPatches() {
+        setStatus('loading', 'Checking patches…');
+        try {
+          const r = await fetch('/api/patches');
+          const d = await r.json();
+          renderPatches(d);
+          if (d.lastChecked) {
+            const ago = timeSince(d.lastChecked);
+            setStatus('ok', `Patches checked ${ago}`);
+          } else {
+            setStatus('ok', 'Ready — click refresh to fetch patches');
+          }
+        } catch {
+          setStatus('error', 'Patch check failed');
+        }
+      }
+
+      // ── Refresh (call server to re-scrape) ─────────────────────────────────────
+      async function doRefresh() {
+        const btn = document.getElementById('btnRefresh');
+        btn.disabled = true;
+        btn.textContent = 'Updating…';
+        setStatus('loading', 'Fetching latest data…');
+        try {
+          const r = await fetch('/api/refresh', { method: 'POST' });
+          const d = await r.json();
+          renderPatches(d);
+          setStatus('ok', `Updated just now`);
+        } catch {
+          setStatus('error', 'Refresh failed');
+        }
+        btn.disabled = false;
+        btn.innerHTML = '&#x21bb; Check for Updates';
+      }
+
+      // ── Patch panel rendering ──────────────────────────────────────────────────
+      function renderPatches(data) {
+        const el = document.getElementById('patchContent');
+        const patches = data.patches || [];
+        if (!patches.length) {
+          el.innerHTML = `<h3>Latest Patch Notes</h3><p style="color:var(--muted);font-size:0.85rem;">No patch notes found yet. Click "Check for Updates".</p>`;
+          return;
+        }
+        el.innerHTML =
+          `<h3>Latest Patch Notes (${patches.length})</h3>` +
+          patches
+            .map(
+              (p) => `
+      <div class="patch-item">
+        <div class="patch-title"><a href="${p.url}" target="_blank" rel="noopener">${esc(p.title)}</a></div>
+        <div class="patch-date">${p.date}</div>
+        <div class="patch-summary">${esc(p.summary)}</div>
+      </div>
+    `,
+            )
+            .join('');
+      }
+
+      function togglePatches() {
+        document.getElementById('patchPanel').classList.toggle('open');
+      }
+
+      // ── Status indicator ───────────────────────────────────────────────────────
+      function setStatus(state, label) {
+        document.getElementById('patchStatus').className = state;
+        document.getElementById('patchLabel').textContent = label;
+      }
+
+      // ── Filter bar ─────────────────────────────────────────────────────────────
+      function renderFilters() {
+        const bar = document.getElementById('filterBar');
+        const names = ['All', ...SURVIVORS.map((s) => s.name)];
+        bar.innerHTML = names
+          .map((n) => {
+            const key = n === 'All' ? 'all' : n;
+            return `<button class="${key === activeFilter ? 'active' : ''}" onclick="setFilter('${key}')">${n}</button>`;
+          })
+          .join('');
+      }
+
+      function setFilter(key) {
+        activeFilter = key;
+        renderFilters();
+        renderGrid();
+      }
+
+      // ── Build grid ─────────────────────────────────────────────────────────────
+      function renderGrid() {
+        const grid = document.getElementById('grid');
+        const list =
+          activeFilter === 'all'
+            ? SURVIVORS
+            : SURVIVORS.filter((s) => s.name === activeFilter);
+        grid.innerHTML = list
+          .map(
+            (s) => `
+    <section class="card">
+      <div class="card-head">
+        <h2>${s.name}</h2>
+        <span class="role-badge">${s.role}</span>
+      </div>
+      <p class="hint">${s.hint}</p>
+      <div class="section-label">Core First</div>
+      <div class="items">${s.core.map(tileHtml).join('')}</div>
+      <div class="section-label">Then Add</div>
+      <div class="items">${s.add.map(tileHtml).join('')}</div>
+      ${s.luxury && s.luxury.length ? `<div class="section-label">Boss / Lunar Picks</div><div class="items">${s.luxury.map(tileHtml).join('')}</div>` : ''}
+    </section>
+  `,
+          )
+          .join('');
+      }
+
+      function tileHtml(key) {
+        const item = ITEMS[key];
+        if (!item) return '';
+        // Try local cached icon first, wiki fallback
+        const localSrc = `/icons/${key}.png`;
+        const wikiSrc = `https://riskofrain2.wiki.gg/wiki/Special:FilePath/${encodeURIComponent(item.file)}`;
+        // Escape apostrophes so onerror JS string doesn't break
+        const safeWikiSrc = wikiSrc.replace(/'/g, '%27');
+        return `
+    <div class="tile ${item.tier}" title="${item.name} — ${item.tag}">
+      <div class="icon-box">
+        <img loading="lazy" src="${localSrc}"
+             onerror="this.onerror=null;this.src='${safeWikiSrc}';this.addEventListener('error',()=>{this.style.display='none';this.nextElementSibling.style.display='grid'})"
+             alt="${item.name}"/>
+        <span class="fallback">${item.name.substring(0, 2).toUpperCase()}</span>
+      </div>
+      <div class="label">${item.name}</div>
+      <div class="tag">${item.tag}</div>
+    </div>
+  `;
+      }
+
+      // ── Helpers ────────────────────────────────────────────────────────────────
+      function esc(s) {
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      function timeSince(iso) {
+        const s = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
+        if (s < 60) return 'just now';
+        if (s < 3600) return Math.floor(s / 60) + 'm ago';
+        if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+        return Math.floor(s / 86400) + 'd ago';
+      }
+    </script>
+  </body>
+</html>

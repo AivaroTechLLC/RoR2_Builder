@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RoR2 Visual Build Reference</title>
+    <style>
+      :root {
+        --bg: #0f1116;
+        --card: #161a22;
+        --card-2: #1b2130;
+        --text: #e8ecf3;
+        --muted: #9aa6bd;
+        --border: #2b3347;
+        --white: #d9d9d9;
+        --green: #6adf8d;
+        --red: #ff6f7d;
+        --yellow: #ffd36a;
+        --violet: #c28cff;
+        --blue: #7cc7ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          Segoe UI,
+          Inter,
+          Arial,
+          sans-serif;
+      }
+
+      .container {
+        width: min(1700px, 96vw);
+        margin: 14px auto 24px;
+      }
+
+      .header {
+        background: linear-gradient(165deg, #1a2030, #121622);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 12px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1rem, 2.3vw, 1.5rem);
+        line-height: 1.25;
+      }
+
+      .sub {
+        color: var(--muted);
+        margin-top: 6px;
+        font-size: 0.9rem;
+      }
+
+      .legend {
+        margin-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+
+      .chip {
+        background: var(--card-2);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 4px 10px;
+      }
+
+      .survivor-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 10px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 11px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-height: 250px;
+      }
+
+      .card h2 {
+        margin: 0;
+        font-size: 1.05rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .role {
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 500;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 2px 8px;
+      }
+
+      .hint {
+        margin: 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+
+      .section-title {
+        margin: 2px 0 0;
+        font-size: 0.77rem;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: #b8c3da;
+      }
+
+      .items {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .item {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #101521;
+        overflow: hidden;
+        min-height: 88px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .item.common {
+        border-color: #667089;
+      }
+      .item.uncommon {
+        border-color: var(--green);
+      }
+      .item.legendary {
+        border-color: var(--red);
+      }
+      .item.boss {
+        border-color: var(--yellow);
+      }
+      .item.lunar {
+        border-color: var(--blue);
+      }
+      .item.void {
+        border-color: var(--violet);
+      }
+
+      .icon-wrap {
+        height: 54px;
+        background: #0a0f1a;
+        display: grid;
+        place-items: center;
+        border-bottom: 1px solid #2a3348;
+      }
+
+      .icon-wrap img {
+        max-width: 48px;
+        max-height: 48px;
+        object-fit: contain;
+        display: block;
+      }
+
+      .item-body {
+        padding: 4px 5px 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .item-name {
+        font-size: 0.67rem;
+        line-height: 1.2;
+        font-weight: 600;
+        min-height: 1.7em;
+      }
+
+      .item-tag {
+        color: var(--muted);
+        font-size: 0.63rem;
+        line-height: 1.1;
+      }
+
+      .footer-note {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 0.75rem;
+        border-top: 1px dashed var(--border);
+        padding-top: 8px;
+      }
+
+      @media (max-width: 700px) {
+        .items {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .card {
+          min-height: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <section class="header">
+        <h1>
+          Risk of Rain 2 — Ultra-Quick Visual Build Reference (All Survivors)
+        </h1>
+        <div class="sub">
+          Use this like a shopping list while playing:
+          <strong>Core First</strong> → <strong>Then Add</strong>. Target: PC
+          latest patches, all official survivors, standard runs.
+        </div>
+        <div class="legend">
+          <span class="chip">Gray = Common</span>
+          <span class="chip">Green = Uncommon</span>
+          <span class="chip">Red = Legendary</span>
+          <span class="chip">Yellow = Boss</span>
+          <span class="chip">Blue = Lunar</span>
+          <span class="chip">Purple = Void</span>
+        </div>
+      </section>
+
+      <main id="survivorGrid" class="survivor-grid"></main>
+
+      <div class="footer-note">
+        Icon source: wiki.gg item files via Special:FilePath. If an icon fails
+        to load, item names still remain for quick lookup.
+      </div>
+    </div>
+
+    <script>
+      const items = {
+        syringe: {
+          name: "Soldier's Syringe",
+          file: "Soldier's Syringe.png",
+          tier: 'common',
+          tag: 'attack speed',
+        },
+        glasses: {
+          name: "Lens-Maker's Glasses",
+          file: "Lens-Maker's Glasses.png",
+          tier: 'common',
+          tag: 'crit chance',
+        },
+        hoof: {
+          name: "Paul's Goat Hoof",
+          file: "Paul's Goat Hoof.png",
+          tier: 'common',
+          tag: 'move speed',
+        },
+        drink: {
+          name: 'Energy Drink',
+          file: 'Energy Drink.png',
+          tier: 'common',
+          tag: 'sprint speed',
+        },
+        mocha: {
+          name: 'Mocha',
+          file: 'Mocha.png',
+          tier: 'common',
+          tag: 'speed + atk',
+        },
+        crowbar: {
+          name: 'Crowbar',
+          file: 'Crowbar.png',
+          tier: 'common',
+          tag: 'opening burst',
+        },
+        dagger: {
+          name: 'Tri-Tip Dagger',
+          file: 'Tri-Tip Dagger.png',
+          tier: 'common',
+          tag: 'bleed',
+        },
+        rounds: {
+          name: 'Armor-Piercing Rounds',
+          file: 'Armor-Piercing Rounds.png',
+          tier: 'common',
+          tag: 'boss damage',
+        },
+        goat: {
+          name: 'Goat Hoof',
+          file: "Paul's Goat Hoof.png",
+          tier: 'common',
+          tag: 'mobility',
+        },
+        tougher: {
+          name: 'Tougher Times',
+          file: 'Tougher Times.png',
+          tier: 'common',
+          tag: 'block chance',
+        },
+        watch: {
+          name: 'Delicate Watch',
+          file: 'Delicate Watch (Item).png',
+          tier: 'common',
+          tag: 'big damage',
+        },
+        crystal: {
+          name: 'Focus Crystal',
+          file: 'Focus Crystal.png',
+          tier: 'common',
+          tag: 'close-range dmg',
+        },
+        backupmag: {
+          name: 'Backup Magazine',
+          file: 'Backup Magazine.png',
+          tier: 'common',
+          tag: 'extra charges',
+        },
+        fungus: {
+          name: 'Bustling Fungus',
+          file: 'Bustling Fungus.png',
+          tier: 'common',
+          tag: 'healing zone',
+        },
+        weeping: {
+          name: 'Weeping Fungus',
+          file: 'Weeping Fungus.png',
+          tier: 'void',
+          tag: 'mobile healing',
+        },
+        feather: {
+          name: 'Hopoo Feather',
+          file: 'Hopoo Feather.png',
+          tier: 'uncommon',
+          tag: 'extra jump',
+        },
+        atg: {
+          name: 'AtG Missile Mk. 1',
+          file: 'AtG Missile Mk. 1.png',
+          tier: 'uncommon',
+          tag: 'proc burst',
+        },
+        ukulele: {
+          name: 'Ukulele',
+          file: 'Ukulele.png',
+          tier: 'uncommon',
+          tag: 'chain lightning',
+        },
+        bands: {
+          name: "Runald's Band",
+          file: "Runald's Band.png",
+          tier: 'uncommon',
+          tag: 'band burst',
+        },
+        bandk: {
+          name: "Kjaro's Band",
+          file: "Kjaro's Band.png",
+          tier: 'uncommon',
+          tag: 'band burst',
+        },
+        pred: {
+          name: 'Predatory Instincts',
+          file: 'Predatory Instincts.png',
+          tier: 'uncommon',
+          tag: 'crit atk speed',
+        },
+        scythe: {
+          name: "Harvester's Scythe",
+          file: "Harvester's Scythe.png",
+          tier: 'uncommon',
+          tag: 'crit heal',
+        },
+        gasoline: {
+          name: 'Gasoline',
+          file: 'Gasoline.png',
+          tier: 'common',
+          tag: 'clear speed',
+        },
+        wisp: {
+          name: "Will-o'-the-wisp",
+          file: "Will-o'-the-wisp.png",
+          tier: 'uncommon',
+          tag: 'on-kill aoe',
+        },
+        ignition: {
+          name: 'Ignition Tank',
+          file: 'Ignition Tank.png',
+          tier: 'uncommon',
+          tag: 'ignite scaling',
+        },
+        shrimp: {
+          name: 'Plasma Shrimp',
+          file: 'Plasma Shrimp.png',
+          tier: 'void',
+          tag: 'shield missiles',
+        },
+        polylute: {
+          name: 'Polylute',
+          file: 'Polylute.png',
+          tier: 'void',
+          tag: 'void chain',
+        },
+        safer: {
+          name: 'Safer Spaces',
+          file: 'Safer Spaces.png',
+          tier: 'void',
+          tag: 'burst block',
+        },
+        singularity: {
+          name: 'Singularity Band',
+          file: 'Singularity Band.png',
+          tier: 'void',
+          tag: 'void band',
+        },
+        lysate: {
+          name: 'Lysate Cell',
+          file: 'Lysate Cell.png',
+          tier: 'void',
+          tag: 'special +1',
+        },
+        lensvoid: {
+          name: "Lost Seer's Lenses",
+          file: "Lost Seer's Lenses.png",
+          tier: 'void',
+          tag: 'insta-kill proc',
+        },
+        clover: {
+          name: '57 Leaf Clover',
+          file: '57 Leaf Clover.png',
+          tier: 'legendary',
+          tag: 'proc consistency',
+        },
+        justice: {
+          name: 'Shattering Justice',
+          file: 'Shattering Justice.png',
+          tier: 'legendary',
+          tag: 'armor shred',
+        },
+        behemoth: {
+          name: 'Brilliant Behemoth',
+          file: 'Brilliant Behemoth.png',
+          tier: 'legendary',
+          tag: 'aoe splash',
+        },
+        hook: {
+          name: 'Sentient Meat Hook',
+          file: 'Sentient Meat Hook.png',
+          tier: 'legendary',
+          tag: 'extra hits',
+        },
+        icbm: {
+          name: 'Pocket I.C.B.M.',
+          file: 'Pocket ICBM.png',
+          tier: 'legendary',
+          tag: 'missile amp',
+        },
+        after: {
+          name: 'Hardlight Afterburner',
+          file: 'Hardlight Afterburner.png',
+          tier: 'legendary',
+          tag: 'utility spam',
+        },
+        alien: {
+          name: 'Alien Head',
+          file: 'Alien Head.png',
+          tier: 'legendary',
+          tag: 'cdr',
+        },
+        laser: {
+          name: 'Laser Scope',
+          file: 'Laser Scope.png',
+          tier: 'legendary',
+          tag: 'crit multiplier',
+        },
+        h3ad: {
+          name: 'H3AD-5T v2',
+          file: 'H3AD-5T v2.png',
+          tier: 'legendary',
+          tag: 'slam burst',
+        },
+        nkuhana: {
+          name: "N'kuhana's Opinion",
+          file: "N'kuhana's Opinion.png",
+          tier: 'legendary',
+          tag: 'heal to damage',
+        },
+        rack: {
+          name: 'Rejuvenation Rack',
+          file: 'Rejuvenation Rack.png',
+          tier: 'legendary',
+          tag: 'heal amp',
+        },
+        daggerred: {
+          name: 'Ceremonial Dagger',
+          file: 'Ceremonial Dagger.png',
+          tier: 'legendary',
+          tag: 'on-kill burst',
+        },
+        spark: {
+          name: 'Charged Perforator',
+          file: 'Charged Perforator.png',
+          tier: 'boss',
+          tag: 'lightning proc',
+        },
+        littledisciple: {
+          name: 'Little Disciple',
+          file: 'Little Disciple.png',
+          tier: 'boss',
+          tag: 'sprint dmg',
+        },
+        gesture: {
+          name: 'Gesture of the Drowned',
+          file: 'Gesture of the Drowned.png',
+          tier: 'lunar',
+          tag: 'equip spam',
+        },
+        glass: {
+          name: 'Shaped Glass',
+          file: 'Shaped Glass.png',
+          tier: 'lunar',
+          tag: 'high risk dmg',
+        },
+        purity: {
+          name: 'Purity',
+          file: 'Purity.png',
+          tier: 'lunar',
+          tag: 'cdr tradeoff',
+        },
+        tonic: {
+          name: 'Spinel Tonic',
+          file: 'Spinel Tonic.png',
+          tier: 'lunar',
+          tag: 'all stats',
+        },
+        fuel: {
+          name: 'Fuel Cell',
+          file: 'Fuel Cell.png',
+          tier: 'uncommon',
+          tag: 'equipment uses',
+        },
+        droneparts: {
+          name: 'Spare Drone Parts',
+          file: 'Spare Drone Parts.png',
+          tier: 'legendary',
+          tag: 'drone power',
+        },
+      };
+
+      const survivors = [
+        {
+          name: 'Commando',
+          role: 'proc DPS',
+          hint: 'Fast-hit scaling: stack proc chains and crit.',
+          core: ['syringe', 'glasses', 'atg', 'ukulele', 'shrimp', 'clover'],
+          add: ['pred', 'scythe', 'watch', 'icbm'],
+        },
+        {
+          name: 'Huntress',
+          role: 'mobile clear',
+          hint: 'Stay moving; prioritize burst openers + chain clear.',
+          core: ['crowbar', 'hoof', 'feather', 'atg', 'ukulele', 'wisp'],
+          add: ['glasses', 'polylute', 'clover', 'bandk'],
+        },
+        {
+          name: 'Bandit',
+          role: 'burst reset',
+          hint: 'Backstab burst + execute rhythm; frontload damage.',
+          core: ['crowbar', 'rounds', 'backupmag', 'watch', 'bands', 'bandk'],
+          add: ['laser', 'justice', 'clover', 'feather'],
+        },
+        {
+          name: 'MUL-T',
+          role: 'sustained gunner',
+          hint: 'Excellent with on-hit and missile scaling.',
+          core: ['syringe', 'mocha', 'atg', 'ukulele', 'shrimp', 'icbm'],
+          add: ['glasses', 'clover', 'justice', 'tougher'],
+        },
+        {
+          name: 'Engineer',
+          role: 'turret scaling',
+          hint: 'Turrets inherit items: build for turret uptime + survival.',
+          core: ['fungus', 'lysate', 'atg', 'ukulele', 'clover', 'tougher'],
+          add: ['icbm', 'nkuhana', 'rack', 'behemoth'],
+        },
+        {
+          name: 'Artificer',
+          role: 'ability burst',
+          hint: 'Big skill damage windows; bands and cooldown help most.',
+          core: ['crowbar', 'bands', 'bandk', 'backupmag', 'ignition', 'alien'],
+          add: ['feather', 'purity', 'glass', 'justice'],
+        },
+        {
+          name: 'Mercenary',
+          role: 'melee i-frames',
+          hint: 'Close-range brawler: mobility, sustain, and burst procs.',
+          core: ['crystal', 'syringe', 'glasses', 'scythe', 'feather', 'safer'],
+          add: ['watch', 'atg', 'behemoth', 'after'],
+        },
+        {
+          name: 'REX',
+          role: 'self-cost control',
+          hint: 'Balance self-damage with aggressive sustain and AoE.',
+          core: ['weeping', 'scythe', 'ukulele', 'wisp', 'nkuhana', 'rack'],
+          add: ['tougher', 'safer', 'clover', 'daggerred'],
+        },
+        {
+          name: 'Loader',
+          role: 'one-shot diver',
+          hint: 'Single target burst + movement speed = map deletion.',
+          core: ['crowbar', 'crystal', 'rounds', 'bands', 'bandk', 'h3ad'],
+          add: ['hoof', 'watch', 'after', 'justice'],
+        },
+        {
+          name: 'Acrid',
+          role: 'DoT + clear',
+          hint: 'Poison controls bosses; stack clear and utility around it.',
+          core: ['gasoline', 'wisp', 'ukulele', 'safer', 'tougher', 'feather'],
+          add: ['ignition', 'clover', 'daggerred', 'behemoth'],
+        },
+        {
+          name: 'Captain',
+          role: 'all-rounder',
+          hint: 'Reliable shotgun and utility; likes proc + drone scaling.',
+          core: ['syringe', 'atg', 'ukulele', 'rounds', 'droneparts', 'clover'],
+          add: ['icbm', 'justice', 'feather', 'watch'],
+        },
+        {
+          name: 'Railgunner',
+          role: 'precision burst',
+          hint: 'Prioritize opener damage and armor shred for boss deletes.',
+          core: ['crowbar', 'rounds', 'bands', 'bandk', 'laser', 'justice'],
+          add: ['feather', 'watch', 'clover', 'h3ad'],
+        },
+        {
+          name: 'Void Fiend',
+          role: 'form shifter',
+          hint: 'Scale fast-hit + survive corruption windows.',
+          core: ['syringe', 'shrimp', 'polylute', 'safer', 'lysate', 'clover'],
+          add: ['atg', 'watch', 'hook', 'behemoth'],
+        },
+        {
+          name: 'Seeker',
+          role: 'hybrid skirmisher',
+          hint: 'Ability-heavy style: cooldown + mobility + burst windows.',
+          core: ['backupmag', 'feather', 'bands', 'bandk', 'alien', 'safer'],
+          add: ['watch', 'tougher', 'clover', 'after'],
+        },
+        {
+          name: 'False Son',
+          role: 'frontline bruiser',
+          hint: 'Tanky pressure with close-mid range damage spikes.',
+          core: ['crystal', 'tougher', 'safer', 'syringe', 'justice', 'scythe'],
+          add: ['behemoth', 'spark', 'feather', 'watch'],
+        },
+        {
+          name: 'CHEF',
+          role: 'close-range control',
+          hint: 'Excels with ignite/aoe and survivability while brawling.',
+          core: [
+            'ignition',
+            'gasoline',
+            'wisp',
+            'crystal',
+            'tougher',
+            'feather',
+          ],
+          add: ['syringe', 'behemoth', 'daggerred', 'clover'],
+        },
+        {
+          name: 'Operator',
+          role: 'ranged sustained',
+          hint: 'Lean into rapid-hit proc chains and movement uptime.',
+          core: ['syringe', 'glasses', 'atg', 'ukulele', 'shrimp', 'clover'],
+          add: ['pred', 'scythe', 'icbm', 'safer'],
+        },
+        {
+          name: 'Drifter',
+          role: 'utility striker',
+          hint: 'Flexible kit: prioritize universal damage + safety.',
+          core: ['watch', 'feather', 'atg', 'ukulele', 'tougher', 'safer'],
+          add: ['wisp', 'justice', 'clover', 'hook'],
+        },
+      ];
+
+      const buildIconUrl = (fileName) =>
+        `https://riskofrain2.wiki.gg/wiki/Special:FilePath/${encodeURIComponent(fileName)}`;
+
+      function createItemTile(itemKey) {
+        const item = items[itemKey];
+        if (!item) return '';
+
+        return `
+        <article class="item ${item.tier}">
+          <div class="icon-wrap">
+            <img
+              loading="lazy"
+              src="${buildIconUrl(item.file)}"
+              alt="${item.name}"
+              onerror="this.style.display='none'; this.parentElement.textContent='${item.name.substring(0, 2).toUpperCase()}'; this.parentElement.style.color='#a8b4cf'; this.parentElement.style.fontWeight='700';"
+            />
+          </div>
+          <div class="item-body">
+            <div class="item-name">${item.name}</div>
+            <div class="item-tag">${item.tag}</div>
+          </div>
+        </article>
+      `;
+      }
+
+      function createSection(label, keys) {
+        return `
+        <div>
+          <h3 class="section-title">${label}</h3>
+          <div class="items">
+            ${keys.map(createItemTile).join('')}
+          </div>
+        </div>
+      `;
+      }
+
+      function render() {
+        const root = document.getElementById('survivorGrid');
+        root.innerHTML = survivors
+          .map(
+            (s) => `
+          <section class="card">
+            <h2>
+              <span>${s.name}</span>
+              <span class="role">${s.role}</span>
+            </h2>
+            <p class="hint">${s.hint}</p>
+            ${createSection('Core First', s.core)}
+            ${createSection('Then Add', s.add)}
+          </section>
+        `,
+          )
+          .join('');
+      }
+
+      render();
+    </script>
+  </body>
+</html>

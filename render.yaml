@@ -1,0 +1,11 @@
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: ror2-build-reference
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production

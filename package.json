@@ -1,0 +1,14 @@
+{
+  "name": "ror2-build-reference",
+  "version": "1.0.0",
+  "description": "Local visual build reference app for Risk of Rain 2 — icon-based meta cheat sheet with live patch checking",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "cache-icons": "node src/cache-icons.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "node-fetch": "^2.7.0"
+  }
+}
