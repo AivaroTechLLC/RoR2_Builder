@@ -351,6 +351,12 @@
     <!-- ─── Filters ────────────────────────────────────────────── -->
     <div class="filters" id="filterBar"></div>
 
+    <!-- ─── Mode selector ──────────────────────────────────────── -->
+    <div class="filters" id="modeBar"></div>
+
+    <!-- ─── Team toggle  ──────────────────────────────────────── -->
+    <div class="filters" id="teamBar"></div>
+
     <!-- ─── Legend ──────────────────────────────────────────────── -->
     <div class="legend">
       <span style="border-color: #596580">Common</span>
@@ -370,7 +376,9 @@
       // ── State ──────────────────────────────────────────────────────────────────
       let ITEMS = {},
         SURVIVORS = [],
-        activeFilter = 'all';
+        activeFilter = 'all',
+        activeMode = 'standard', // 'standard', 'eclipse', 'prismatic'
+        activeTeam = 'squad'; // 'squad', 'solo'
 
       // ── Boot ───────────────────────────────────────────────────────────────────
       (async () => {
@@ -386,6 +394,8 @@
           ITEMS = d.items;
           SURVIVORS = d.survivors;
           renderFilters();
+          renderModeBar();
+          renderTeamBar();
           renderGrid();
         } catch (e) {
           document.getElementById('grid').innerHTML =
@@ -479,6 +489,49 @@
         renderGrid();
       }
 
+      // ── Mode bar ───────────────────────────────────────────────────────────────
+      function renderModeBar() {
+        const bar = document.getElementById('modeBar');
+        const modes = [
+          { key: 'standard', label: '\uD83C\uDFAE Standard' },
+          { key: 'eclipse', label: '\uD83C\uDF11 Eclipse' },
+          { key: 'prismatic', label: '\uD83D\uDC8E Prismatic Trials' },
+        ];
+        bar.innerHTML = modes
+          .map(
+            (m) =>
+              `<button class="${m.key === activeMode ? 'active' : ''}" onclick="setMode('${m.key}')">${m.label}</button>`,
+          )
+          .join('');
+      }
+
+      function setMode(key) {
+        activeMode = key;
+        renderModeBar();
+        renderGrid();
+      }
+
+      // ── Team bar ───────────────────────────────────────────────────────────────
+      function renderTeamBar() {
+        const bar = document.getElementById('teamBar');
+        const teams = [
+          { key: 'squad', label: '\uD83E\uDEC2 Squad' },
+          { key: 'solo', label: '\uD83D\uDC3A Solo' },
+        ];
+        bar.innerHTML = teams
+          .map(
+            (t) =>
+              `<button class="${t.key === activeTeam ? 'active' : ''}" style="${t.key === activeTeam && t.key === 'solo' ? 'background:var(--violet);border-color:var(--violet);' : ''}" onclick="setTeam('${t.key}')">${t.label}</button>`,
+          )
+          .join('');
+      }
+
+      function setTeam(key) {
+        activeTeam = key;
+        renderTeamBar();
+        renderGrid();
+      }
+
       // ── Build grid ─────────────────────────────────────────────────────────────
       function renderGrid() {
         const grid = document.getElementById('grid');
@@ -486,23 +539,48 @@
           activeFilter === 'all'
             ? SURVIVORS
             : SURVIVORS.filter((s) => s.name === activeFilter);
+
         grid.innerHTML = list
-          .map(
-            (s) => `
-    <section class="card">
+          .map((s) => {
+            const variants = s.variants || [s];
+
+            return variants
+              .map((v) => {
+                // Pick the right build data based on team + mode
+                const build =
+                  activeTeam === 'solo'
+                    ? (v.solo && v.solo[activeMode]) || v[activeMode]
+                    : v[activeMode];
+                if (!build) return '';
+
+                const teamLabel = activeTeam === 'solo' ? ' \uD83D\uDC3A' : '';
+                const modeColors = {
+                  standard: '',
+                  eclipse: 'var(--yellow)',
+                  prismatic: 'var(--violet)',
+                };
+                const modeBadge =
+                  activeMode !== 'standard'
+                    ? `<span style="color:${modeColors[activeMode]};font-size:0.68rem;margin-left:6px;">${activeMode === 'eclipse' ? '\uD83C\uDF11' : '\uD83D\uDC8E'}</span>`
+                    : '';
+
+                return `
+    <section class="card" ${activeTeam === 'solo' ? 'style="border-color:var(--violet);"' : ''}>
       <div class="card-head">
-        <h2>${s.name}</h2>
-        <span class="role-badge">${s.role}</span>
+        <h2>${s.name}${variants.length > 1 ? ` <small style="color:var(--muted);font-size:0.7rem;font-weight:400;">— ${v.style}</small>` : ''}${modeBadge}${teamLabel}</h2>
+        <span class="role-badge">${v.role}</span>
       </div>
-      <p class="hint">${s.hint}</p>
+      <p class="hint">${build.hint}</p>
       <div class="section-label">Core First</div>
-      <div class="items">${s.core.map(tileHtml).join('')}</div>
+      <div class="items">${(build.core || []).map(tileHtml).join('')}</div>
       <div class="section-label">Then Add</div>
-      <div class="items">${s.add.map(tileHtml).join('')}</div>
-      ${s.luxury && s.luxury.length ? `<div class="section-label">Boss / Lunar Picks</div><div class="items">${s.luxury.map(tileHtml).join('')}</div>` : ''}
+      <div class="items">${(build.add || []).map(tileHtml).join('')}</div>
+      ${build.luxury && build.luxury.length ? `<div class="section-label">Boss / Lunar Picks</div><div class="items">${(build.luxury || []).map(tileHtml).join('')}</div>` : ''}
     </section>
-  `,
-          )
+  `;
+              })
+              .join('');
+          })
           .join('');
       }
 
