@@ -223,6 +223,9 @@
       .tile.void {
         border-color: var(--violet);
       }
+      .tile.equipment {
+        border-color: #ff9900;
+      }
 
       .tile .icon-box {
         height: 52px;
@@ -365,6 +368,7 @@
       <span style="border-color: var(--yellow)">Boss</span>
       <span style="border-color: var(--blue)">Lunar</span>
       <span style="border-color: var(--violet)">Void</span>
+      <span style="border-color: #ff9900">Equipment</span>
     </div>
 
     <!-- ─── Build grid ─────────────────────────────────────────── -->
@@ -553,6 +557,13 @@
                     : v[activeMode];
                 if (!build) return '';
 
+                // Resolve equipment for current mode + team
+                const eqMap = v.equipment || {};
+                const eqModeKey = activeTeam === 'solo'
+                  ? 'solo' + activeMode.charAt(0).toUpperCase() + activeMode.slice(1)
+                  : activeMode;
+                const eqKey = eqMap[eqModeKey] || eqMap[activeMode] || null;
+
                 const teamLabel = activeTeam === 'solo' ? ' \uD83D\uDC3A' : '';
                 const modeColors = {
                   standard: '',
@@ -576,6 +587,7 @@
       <div class="section-label">Then Add</div>
       <div class="items">${(build.add || []).map(tileHtml).join('')}</div>
       ${build.luxury && build.luxury.length ? `<div class="section-label">Boss / Lunar Picks</div><div class="items">${(build.luxury || []).map(tileHtml).join('')}</div>` : ''}
+      ${eqKey ? `<div class="section-label">Equipment</div><div class="items">${tileHtml(eqKey)}${eqMap.note ? `<div style="grid-column:2/-1;font-size:0.68rem;color:var(--muted);align-self:center;padding:0 4px;">${eqMap.note}</div>` : ''}</div>` : ''}
     </section>
   `;
               })

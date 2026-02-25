@@ -507,4 +507,90 @@ module.exports = {
     tier: 'void',
     tag: 'random equip',
   },
+
+  // ── Equipment (active items) ─────────────────────────────────────────────
+  royal_capacitor: {
+    name: 'Royal Capacitor',
+    file: 'Royal_Capacitor.png',
+    tier: 'equipment',
+    tag: '3000% burst 20s',
+  },
+  dml: {
+    name: 'Disposable Missile Launcher',
+    file: 'Disposable_Missile_Launcher.png',
+    tier: 'equipment',
+    tag: '12×300% missiles 45s',
+  },
+  forgive_me: {
+    name: 'Forgive Me Please',
+    file: 'Forgive_Me_Please.png',
+    tier: 'equipment',
+    tag: 'on-kill trigger ×8',
+  },
+  blast_shower: {
+    name: 'Blast Shower',
+    file: 'Blast_Shower.png',
+    tier: 'equipment',
+    tag: 'cleanse all 20s',
+  },
+  foreign_fruit: {
+    name: 'Foreign Fruit',
+    file: 'Foreign_Fruit.png',
+    tier: 'equipment',
+    tag: 'heal 50% HP 45s',
+  },
+  super_massive_leech: {
+    name: 'Super Massive Leech',
+    file: 'Super_Massive_Leech.png',
+    tier: 'equipment',
+    tag: '20% lifesteal 8s',
+  },
+  volcanic_egg: {
+    name: 'Volcanic Egg',
+    file: 'Volcanic_Egg.png',
+    tier: 'equipment',
+    tag: 'fireball 500%+800%',
+  },
+  ocular_hud: {
+    name: 'Ocular HUD',
+    file: 'Ocular_HUD.png',
+    tier: 'equipment',
+    tag: '+100% crit 8s',
+  },
+  molotov: {
+    name: 'Molotov (6-Pack)',
+    file: 'Molotov_(6-Pack).png',
+    tier: 'equipment',
+    tag: '6× ignite 500%',
+  },
+  the_backup: {
+    name: 'The Back-up',
+    file: 'The_Back-up.png',
+    tier: 'equipment',
+    tag: '4 drones 25s',
+  },
+  preon: {
+    name: 'Preon Accumulator',
+    file: 'Preon_Accumulator.png',
+    tier: 'equipment',
+    tag: '4000% detonation',
+  },
+  jade_elephant: {
+    name: 'Jade Elephant',
+    file: 'Jade_Elephant.png',
+    tier: 'equipment',
+    tag: '500 armor 5s',
+  },
+  sawmerang: {
+    name: 'Sawmerang',
+    file: 'Sawmerang.png',
+    tier: 'equipment',
+    tag: '3×400% bleed',
+  },
+  gnarled_woodsprite: {
+    name: 'Gnarled Woodsprite',
+    file: 'Gnarled_Woodsprite.png',
+    tier: 'equipment',
+    tag: '1.5%/s heal 15s',
+  },
 };

@@ -29,6 +29,15 @@ module.exports = [
       {
         style: 'Proc Chain',
         role: 'proc DPS',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Clover boosts Royal Capacitor; swap to DML when I.C.B.M. is online (10,800% burst)',
+        },
         standard: {
           hint: 'Fast-hit scaling: stack proc chains and crit for exponential damage.',
           core: ['syringe', 'glasses', 'atg', 'ukulele', 'shrimp', 'clover'],
@@ -99,6 +108,15 @@ module.exports = [
       {
         style: 'Crit Bleed',
         role: 'bleed DPS',
+        equipment: {
+          standard: 'forgive_me',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'forgive_me',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Forgive Me Please triggers Shatterspleen chain-kill explosions ×8',
+        },
         standard: {
           hint: 'Stack crit to 100%, let Shatterspleen carry. Clover rerolls everything.',
           core: [
@@ -184,6 +202,15 @@ module.exports = [
       {
         style: 'Ballista Burst',
         role: 'mobile burst',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'foreign_fruit',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'foreign_fruit',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Burst supplement for band combos; Foreign Fruit emergency heal for lowest HP pool',
+        },
         standard: {
           hint: 'Backup Mag for extra Ballista charges. Bands + crowbar for opener burst.',
           core: ['crowbar', 'backupmag', 'bands', 'bandk', 'feather', 'atg'],
@@ -271,6 +298,15 @@ module.exports = [
       {
         style: 'Chain Clear',
         role: 'mobile clear',
+        equipment: {
+          standard: 'forgive_me',
+          eclipse: 'blast_shower',
+          prismatic: 'forgive_me',
+          soloStandard: 'forgive_me',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'forgive_me',
+          note: 'Triggers Wisp + Gasoline chain cascades ×8 — screen wipes from one doll',
+        },
         standard: {
           hint: 'Stay moving; Glaive + procs clear entire screens.',
           core: ['hoof', 'feather', 'ukulele', 'wisp', 'atg', 'polylute'],
@@ -353,6 +389,15 @@ module.exports = [
       {
         style: 'Backstab Burst',
         role: 'burst reset',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Royal Cap + Crowbar + AP Rounds opener = 6,300% effective damage on bosses',
+        },
         standard: {
           hint: 'Backstab burst + Lights Out reset rhythm. Frontload all damage.',
           core: ['crowbar', 'rounds', 'backupmag', 'watch', 'bands', 'bandk'],
@@ -428,6 +473,15 @@ module.exports = [
       {
         style: 'Hemorrhage DoT',
         role: 'bleed sustain',
+        equipment: {
+          standard: 'forgive_me',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'forgive_me',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Forgive Me Please triggers hemorrhage chain-kills via on-kill procs',
+        },
         standard: {
           hint: 'Stack hemorrhage via Desperado crits. Sustained boss damage over time.',
           core: [
@@ -512,6 +566,15 @@ module.exports = [
       {
         style: 'Nailgun Proc',
         role: 'sustained gunner',
+        equipment: {
+          standard: 'dml',
+          eclipse: 'blast_shower',
+          prismatic: 'dml',
+          soloStandard: 'dml',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'dml',
+          note: 'I.C.B.M. triples DML to 36 missiles = 10,800% total burst damage',
+        },
         standard: {
           hint: 'Nailgun fires extremely fast — proc chains scale insanely.',
           core: ['syringe', 'mocha', 'atg', 'ukulele', 'shrimp', 'icbm'],
@@ -581,6 +644,15 @@ module.exports = [
       {
         style: 'Rebar Sniper',
         role: 'burst puncher',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Royal Cap + Crowbar + AP Rounds = 6,300% opener on bosses',
+        },
         standard: {
           hint: 'Rebar Puncher plays like Railgunner lite. Stack opener damage.',
           core: ['crowbar', 'rounds', 'bands', 'bandk', 'watch', 'laser'],
@@ -659,6 +731,15 @@ module.exports = [
       {
         style: 'Stationary Turrets',
         role: 'turret scaling',
+        equipment: {
+          standard: 'dml',
+          eclipse: 'blast_shower',
+          prismatic: 'dml',
+          soloStandard: 'dml',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'dml',
+          note: 'Turrets inherit items NOT equipment — DML + I.C.B.M. for personal burst (10,800%)',
+        },
         standard: {
           hint: 'Bustling Fungus + turret inheritance. Plant turrets on the teleporter and wait.',
           core: ['fungus', 'atg', 'ukulele', 'tougher', 'clover', 'icbm'],
@@ -729,6 +810,15 @@ module.exports = [
       {
         style: 'Mobile Turrets',
         role: 'walking turret aggro',
+        equipment: {
+          standard: 'dml',
+          eclipse: 'blast_shower',
+          prismatic: 'dml',
+          soloStandard: 'dml',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'dml',
+          note: 'I.C.B.M. in core triples DML missiles — best personal burst for Engineer',
+        },
         standard: {
           hint: 'Walking turrets move with you — Fungus is useless. Stack damage and proc.',
           core: ['syringe', 'atg', 'ukulele', 'shrimp', 'clover', 'icbm'],
@@ -811,6 +901,15 @@ module.exports = [
       {
         style: 'Shield + Mines',
         role: 'defensive zoner',
+        equipment: {
+          standard: 'foreign_fruit',
+          eclipse: 'foreign_fruit',
+          prismatic: 'foreign_fruit',
+          soloStandard: 'foreign_fruit',
+          soloEclipse: 'foreign_fruit',
+          soloPrismatic: 'foreign_fruit',
+          note: "Foreign Fruit 50% heal → Rejuv Rack doubles to 100% → Aegis barrier + N'kuhana skulls",
+        },
         standard: {
           hint: 'Shield generator + Pressure Mines for area denial. Tanky and consistent.',
           core: ['fungus', 'tougher', 'safer', 'nkuhana', 'rack', 'aegis'],
@@ -883,6 +982,15 @@ module.exports = [
       {
         style: 'Ion Surge Burst',
         role: 'ability burst',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Alien Head reduces Royal Cap CD to ~15s; with Gesture auto-fires every ~7.5s',
+        },
         standard: {
           hint: 'Ion Surge for mobility. Band combos + cooldown for repeated burst windows.',
           core: ['crowbar', 'bands', 'bandk', 'backupmag', 'ignition', 'alien'],
@@ -952,6 +1060,15 @@ module.exports = [
       {
         style: 'Flamethrower Sustain',
         role: 'close-range mage',
+        equipment: {
+          standard: 'forgive_me',
+          eclipse: 'blast_shower',
+          prismatic: 'forgive_me',
+          soloStandard: 'forgive_me',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'forgive_me',
+          note: 'Forgive Me triggers Wisp + Gasoline cascading on-kill chains ×8',
+        },
         standard: {
           hint: 'Flamethrower melts with ignition scaling. Stay close, burn everything.',
           core: [
@@ -1045,6 +1162,15 @@ module.exports = [
       {
         style: 'Slicing Winds',
         role: 'ranged melee hybrid',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Ranged burst supplement between Slicing Winds casts',
+        },
         standard: {
           hint: 'Slicing Winds gives safe ranged option. Crit + proc chains.',
           core: ['glasses', 'pred', 'laser', 'syringe', 'atg', 'clover'],
@@ -1126,6 +1252,15 @@ module.exports = [
       {
         style: 'Eviscerate Brawler',
         role: 'melee i-frames',
+        equipment: {
+          standard: 'volcanic_egg',
+          eclipse: 'foreign_fruit',
+          prismatic: 'volcanic_egg',
+          soloStandard: 'volcanic_egg',
+          soloEclipse: 'foreign_fruit',
+          soloPrismatic: 'volcanic_egg',
+          note: 'Volcanic Egg provides escape + repositioning between i-frame windows',
+        },
         standard: {
           hint: 'Close-range i-frame spam. Sustain through damage with Scythe + crit.',
           core: ['crystal', 'syringe', 'glasses', 'scythe', 'feather', 'safer'],
@@ -1242,6 +1377,15 @@ module.exports = [
       {
         style: 'Heal Tank',
         role: 'self-sustain AoE',
+        equipment: {
+          standard: 'super_massive_leech',
+          eclipse: 'super_massive_leech',
+          prismatic: 'super_massive_leech',
+          soloStandard: 'super_massive_leech',
+          soloEclipse: 'super_massive_leech',
+          soloPrismatic: 'super_massive_leech',
+          note: "20% lifesteal → Rejuv Rack doubles → Aegis barrier + N'kuhana skulls = strongest synergy",
+        },
         standard: {
           hint: "Massive healing → barrier via Aegis. N'kuhana converts overheal to damage.",
           core: ['weeping', 'scythe', 'nkuhana', 'rack', 'aegis', 'clover'],
@@ -1304,6 +1448,15 @@ module.exports = [
       {
         style: 'Aggressive AoE',
         role: 'self-cost control',
+        equipment: {
+          standard: 'forgive_me',
+          eclipse: 'blast_shower',
+          prismatic: 'forgive_me',
+          soloStandard: 'forgive_me',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'forgive_me',
+          note: 'Doll triggers Wisp + Gasoline + Dagger triple on-kill cascade',
+        },
         standard: {
           hint: 'Accept self-damage for massive AoE. Seed Barrage + on-kill chains.',
           core: [
@@ -1408,6 +1561,15 @@ module.exports = [
       {
         style: 'One-Punch',
         role: 'one-shot diver',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'royal_capacitor',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'royal_capacitor',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Royal Cap + Crowbar + AP Rounds + Focus Crystal = 7,560% effective opener',
+        },
         standard: {
           hint: 'Charged Gauntlet one-shots bosses with enough openers. Pure burst.',
           core: ['crowbar', 'crystal', 'rounds', 'bands', 'bandk', 'h3ad'],
@@ -1486,6 +1648,15 @@ module.exports = [
       {
         style: 'Grapple Mobility',
         role: 'mobile bruiser',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'royal_capacitor',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'royal_capacitor',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Already best mobility — needs damage supplement; grapple barrier handles survival',
+        },
         standard: {
           hint: 'Grapple for permanent barrier. Speed + survivability over raw burst.',
           core: ['hoof', 'mocha', 'feather', 'tougher', 'safer', 'bands'],
@@ -1549,6 +1720,15 @@ module.exports = [
       {
         style: 'Poison Kite',
         role: 'DoT + clear',
+        equipment: {
+          standard: 'forgive_me',
+          eclipse: 'blast_shower',
+          prismatic: 'forgive_me',
+          soloStandard: 'forgive_me',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'forgive_me',
+          note: 'Throw doll into mob pack — triggers Wisp + Gasoline while you kite away',
+        },
         standard: {
           hint: 'Apply poison to everything, kite, let DoT do the work.',
           core: ['gasoline', 'wisp', 'ukulele', 'safer', 'tougher', 'feather'],
@@ -1643,6 +1823,15 @@ module.exports = [
       {
         style: 'Blight Melee',
         role: 'melee DoT',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'foreign_fruit',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'foreign_fruit',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Burst supplement for sustained melee; Foreign Fruit emergency heal for Eclipse melee',
+        },
         standard: {
           hint: 'Blight stacks with melee attacks. Get close and shred.',
           core: [
@@ -1748,6 +1937,15 @@ module.exports = [
       {
         style: 'Drone Commander',
         role: 'drone scaling',
+        equipment: {
+          standard: 'the_backup',
+          eclipse: 'blast_shower',
+          prismatic: 'the_backup',
+          soloStandard: 'the_backup',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'the_backup',
+          note: '4 Strike Drones inherit Spare Drone Parts — chain guns + missiles = massive DPS',
+        },
         standard: {
           hint: 'Spare Drone Parts + drones = army. Buy every drone you see.',
           core: ['droneparts', 'atg', 'ukulele', 'squid', 'clover', 'icbm'],
@@ -1818,6 +2016,15 @@ module.exports = [
       {
         style: 'Shotgun Proc',
         role: 'all-rounder',
+        equipment: {
+          standard: 'dml',
+          eclipse: 'blast_shower',
+          prismatic: 'dml',
+          soloStandard: 'dml',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'dml',
+          note: 'I.C.B.M. triples DML missiles — 10,800% burst from 8-pellet proc chains',
+        },
         standard: {
           hint: 'Vulcan Shotgun hits 8 pellets — proc chains go crazy.',
           core: ['syringe', 'atg', 'ukulele', 'rounds', 'clover', 'icbm'],
@@ -1909,6 +2116,15 @@ module.exports = [
       {
         style: 'Supercharge Sniper',
         role: 'precision burst',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Burst supplement for squishiest survivor; Blast Shower critical for Eclipse survival',
+        },
         standard: {
           hint: 'Supercharge for massive single-target. Bands proc off the big hit.',
           core: ['crowbar', 'rounds', 'bands', 'bandk', 'laser', 'justice'],
@@ -1971,6 +2187,15 @@ module.exports = [
       {
         style: 'Cryocharge',
         role: 'freeze utility',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Alien Head reduces Royal Cap CD to ~15s — efficient burst between freezes',
+        },
         standard: {
           hint: 'Cryocharge freezes on weakpoint. Crowd control + burst hybrid.',
           core: ['crowbar', 'rounds', 'backupmag', 'bands', 'bandk', 'alien'],
@@ -2061,6 +2286,15 @@ module.exports = [
       {
         style: 'Void Corruption',
         role: 'form shifter',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Royal Cap for reliable burst; consider Spinel Tonic if committing to corruption',
+        },
         standard: {
           hint: 'Embrace corruption windows. Void items accelerate corruption for more DPS uptime.',
           core: ['syringe', 'shrimp', 'polylute', 'safer', 'lysate', 'clover'],
@@ -2168,6 +2402,15 @@ module.exports = [
       {
         style: 'Suppress Control',
         role: 'sustained safe',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Safe sustained build wants reliable short-CD burst supplement',
+        },
         standard: {
           hint: 'Stay in base form. Use Suppress to heal and control corruption.',
           core: ['syringe', 'glasses', 'atg', 'ukulele', 'tougher', 'clover'],
@@ -2252,6 +2495,15 @@ module.exports = [
       {
         style: 'Ability Spam',
         role: 'hybrid skirmisher',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Alien Head reduces Royal Cap CD to ~15s between ability casts',
+        },
         standard: {
           hint: 'Ability-heavy style: cooldown + mobility + burst windows.',
           core: ['backupmag', 'feather', 'bands', 'bandk', 'alien', 'safer'],
@@ -2334,6 +2586,15 @@ module.exports = [
       {
         style: 'Sojourn Sustain',
         role: 'sustain fighter',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'More damage = more Sojourn healing; Royal Cap 20s CD keeps healing consistent',
+        },
         standard: {
           hint: 'Sojourn heals scale with damage dealt. Build damage to heal.',
           core: ['syringe', 'glasses', 'atg', 'scythe', 'ukulele', 'clover'],
@@ -2418,6 +2679,15 @@ module.exports = [
       {
         style: 'Tank Brawler',
         role: 'frontline bruiser',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Already tanky — needs damage supplement; Blast Shower protects high-HP pool in Eclipse',
+        },
         standard: {
           hint: 'Tanky pressure with close-mid range damage spikes.',
           core: ['crystal', 'tougher', 'safer', 'syringe', 'justice', 'scythe'],
@@ -2501,6 +2771,15 @@ module.exports = [
       {
         style: 'Lunar Synergy',
         role: 'lunar bruiser',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Transcendence negates healing equipment — Royal Cap for raw damage',
+        },
         standard: {
           hint: 'False Son benefits from Lunar items more than most. Lean into the curse.',
           core: [
@@ -2599,6 +2878,15 @@ module.exports = [
       {
         style: 'Ignite AoE',
         role: 'close-range control',
+        equipment: {
+          standard: 'forgive_me',
+          eclipse: 'blast_shower',
+          prismatic: 'forgive_me',
+          soloStandard: 'forgive_me',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'forgive_me',
+          note: 'Triggers Wisp + Gasoline cascading on-kill chains ×8 while brawling',
+        },
         standard: {
           hint: 'Excels with ignite/aoe and survivability while brawling.',
           core: [
@@ -2707,6 +2995,15 @@ module.exports = [
       {
         style: 'Glaze Kite',
         role: 'ranged control',
+        equipment: {
+          standard: 'molotov',
+          eclipse: 'blast_shower',
+          prismatic: 'molotov',
+          soloStandard: 'molotov',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'molotov',
+          note: 'Ignition Tank makes Molotov DoT deal +300% — massive area denial while kiting',
+        },
         standard: {
           hint: 'Glaze at range, kite enemies through oil. Safer playstyle.',
           core: ['ignition', 'hoof', 'mocha', 'ukulele', 'tougher', 'feather'],
@@ -2803,6 +3100,15 @@ module.exports = [
       {
         style: 'Rapid Fire',
         role: 'ranged sustained',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Best general-purpose burst for proc builds; Clover boosts proc reliability',
+        },
         standard: {
           hint: 'Lean into rapid-hit proc chains and movement uptime.',
           core: ['syringe', 'glasses', 'atg', 'ukulele', 'shrimp', 'clover'],
@@ -2887,6 +3193,15 @@ module.exports = [
       {
         style: 'Universal',
         role: 'utility striker',
+        equipment: {
+          standard: 'royal_capacitor',
+          eclipse: 'blast_shower',
+          prismatic: 'royal_capacitor',
+          soloStandard: 'royal_capacitor',
+          soloEclipse: 'blast_shower',
+          soloPrismatic: 'royal_capacitor',
+          note: 'Flexible build wants reliable 20s burst; Blast Shower protects Delicate Watch in Eclipse',
+        },
         standard: {
           hint: 'Flexible kit: prioritize universal damage + safety.',
           core: ['watch', 'feather', 'atg', 'ukulele', 'tougher', 'safer'],
